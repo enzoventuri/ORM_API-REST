@@ -1,12 +1,11 @@
 package com.example.demo.entity;
 
-import com.example.demo.composite_ids.EpidemiologyObservationId;
+import com.example.demo.composite_ids.ObservationDayId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * Represents the Epidemiology Observation Entity Class
@@ -26,22 +25,35 @@ public class EpidemiologyObservation {
      */
     @Schema(description = "Composite PK of the Observation")
     @EmbeddedId
-    private EpidemiologyObservationId id;
+    private ObservationDayId id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumns({
+            @JoinColumn(
+                    name = "location_id",
+                    referencedColumnName = "location_id"
+            ),
+            @JoinColumn(
+                    name = "observation_date",
+                    referencedColumnName = "observation_date"
+            )
+    })
+    private ObservationDay observationDay;
 
     /**
-     *
+     * Total Virus Cases
      */
-    @Column(
-            name = "observation_date",
-            nullable = false
-    )
-    private LocalDateTime observationDate;
-
+    @Schema(description = "Total Virus Cases", example = "10000")
     @Column(
             name = "total_cases"
     )
     private BigDecimal totalCases;
 
+    /**
+     * New Virus Cases
+     */
+    @Schema(description = "New Virus Cases", example = "10000")
     @Column(
             name = "new_cases"
     )
