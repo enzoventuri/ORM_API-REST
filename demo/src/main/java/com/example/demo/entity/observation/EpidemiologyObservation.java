@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.entity.observation;
 
 import com.example.demo.composite_ids.ObservationDayId;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 @Schema(description = "Represents the Epidemiology Observation")
 @Entity
-@Table(name = "epidemiology_observation")
+@Table(schema = "covid", name = "epidemiology_observation")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -60,7 +60,7 @@ public class EpidemiologyObservation {
     private BigDecimal newCases;
 
     @Column(
-            name = "new_cases_smooth"
+            name = "new_cases_smoothed"
     )
     private BigDecimal newCasesSmooth;
 
@@ -70,7 +70,7 @@ public class EpidemiologyObservation {
     private BigDecimal newDeaths;
 
     @Column(
-            name = "new_deaths_smooth"
+            name = "new_deaths_smoothed"
     )
     private BigDecimal newDeathsSmooth;
 

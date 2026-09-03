@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5431/covid_db
+    username: postgres
+    password: "123@Mudar"
+
+  jpa:
+    hibernate:
+      ddl-auto: validate

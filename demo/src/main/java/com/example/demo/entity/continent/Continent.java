@@ -1,10 +1,10 @@
-package com.example.demo.entity;
+package com.example.demo.entity.continent;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "continent")
+@Table(schema = "covid", name = "continent")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -14,12 +14,12 @@ public class Continent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "continent_id")
-    private Short id;
+    private Short continent_id;
 
     @Column(
             name = "name",
-            length = 40,
-            nullable = false
+            nullable = false,
+            length = 40
     )
     private String name;
 

@@ -1,11 +1,11 @@
-package com.example.demo.entity;
+package com.example.demo.entity.location;
 
+import com.example.demo.entity.continent.Continent;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.type.descriptor.jdbc.SmallIntJdbcType;
 
 @Entity
-@Table(name = "location")
+@Table(schema = "covid", name = "location")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,12 +24,6 @@ public class Location {
     )
     private String isoCode;
 
-    @JoinColumn(name = "continent_id")
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
-    private Continent continent;
-
     @Column(
             name = "name",
             length = 120,
@@ -37,12 +31,17 @@ public class Location {
     )
     private String name;
 
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "continent_id")
+    private Continent continent;
 
-    @Column(
+    @ManyToOne
+    @JoinColumn(
             name = "location_type_code",
-            length = 30,
             nullable = false
     )
-    private String locationTypeCode;
+    private LocationType locationType;
 
 }

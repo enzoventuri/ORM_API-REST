@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Embeddable
@@ -20,5 +21,5 @@ public class ObservationDayId implements Serializable {
     private Long idLocation;
 
     @Column(name = "observation_date")
-    private LocalDateTime observationDate;
+    private LocalDate observationDate;
 }
