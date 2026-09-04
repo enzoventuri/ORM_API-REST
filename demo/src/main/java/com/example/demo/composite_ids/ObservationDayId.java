@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class ObservationDayId implements Serializable {
+public class    ObservationDayId implements Serializable {
     @Column(name = "location_id")
     private Long idLocation;
 

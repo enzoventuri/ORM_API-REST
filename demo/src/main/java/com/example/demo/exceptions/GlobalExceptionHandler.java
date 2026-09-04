@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(
-            IllegalArgumentException exception, HttpServletRequest http
+            Exception exception, HttpServletRequest http
     ) {
         ErrorResponse error = ErrorResponse.create(
                 HttpStatus.BAD_REQUEST.value(),

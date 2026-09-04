@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EpidemiologyObservationResponse;
 import com.example.demo.dto.LocationProfileResponse;
 import com.example.demo.dto.LocationResponse;
 import com.example.demo.entity.location.Location;
 import com.example.demo.entity.location.LocationProfile;
+import com.example.demo.entity.observation.EpidemiologyObservation;
+import com.example.demo.mapper.EpidemiologyObsevationMapper;
 import com.example.demo.mapper.LocationMapper;
 import com.example.demo.mapper.LocationProfileMapper;
+import com.example.demo.repository.EpidemiologyObservationRepository;
 import com.example.demo.repository.LocationProfileRepository;
 import com.example.demo.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +28,25 @@ import java.util.List;
 public class LocationController {
     private final LocationRepository locationRepository;
     private final LocationProfileRepository locationProfileRepository;
+    private final EpidemiologyObservationRepository epidemiologyObservationRepository;
 
     private final LocationMapper locationMapper;
     private final LocationProfileMapper locationProfileMapper;
+    private final EpidemiologyObsevationMapper epidemiologyObsevationMapper;
 
     @Autowired
     public LocationController(LocationRepository locationRepository,
                               LocationProfileRepository locationProfileRepository,
                               LocationMapper locationMapper,
-                              LocationProfileMapper locationProfileMapper) {
+                              LocationProfileMapper locationProfileMapper,
+                              EpidemiologyObservationRepository epidemiologyObservationRepository,
+                              EpidemiologyObsevationMapper epidemiologyObsevationMapper) {
         this.locationRepository = locationRepository;
         this.locationProfileRepository = locationProfileRepository;
         this.locationMapper = locationMapper;
         this.locationProfileMapper = locationProfileMapper;
+        this.epidemiologyObservationRepository = epidemiologyObservationRepository;
+        this.epidemiologyObsevationMapper = epidemiologyObsevationMapper;
     }
 
     @GetMapping("/")
@@ -64,18 +74,18 @@ public class LocationController {
     }
 
     @GetMapping("{isoCode}/epidemiology")
-    public ResponseEntity<Page<LocationProfileResponse>> getAllEpidemiologyObservationsFromIsoCode(@PathVariable String isoCode,
-                                                                                                   Pageable pageable,
-                                                                                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                                                                                    LocalDateTime startTime,
-                                                                                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                                                                                       LocalDateTime endTime
+    public ResponseEntity<Page<EpidemiologyObservationResponse>> getAllEpidemiologyObservationsFromIsoCode(
+            @PathVariable String isoCode,
+            Pageable pageable,
+            @RequestParam
+            LocalDate startDate,
+            @RequestParam
+            LocalDate endDate
                                                                                                    ) {
-        Page<LocationProfile> locationProfiles = locationProfileRepository.findByLocationIsoCode(
-                isoCode, pageable
-        );
+        Page<EpidemiologyObservation> epidemiologyObservations =
+                epidemiologyObservationRepository.findByIsoCodeAndTime(isoCode, startDate, endDate, pageable);
 
-        return ResponseEntity.ok(locationProfileMapper.toLocationProfilePageResponse(locationProfiles));
+        return ResponseEntity.ok(epidemiologyObsevationMapper.toResponsePage(epidemiologyObservations));
     }
 
 }
