@@ -49,7 +49,7 @@ public class LocationController {
         this.epidemiologyObsevationMapper = epidemiologyObsevationMapper;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Page<LocationResponse>> getAllLocations(Pageable page) {
         Page<Location> locations = locationRepository.findAll(page);
 
@@ -89,4 +89,3 @@ public class LocationController {
     }
 
 }
-
